@@ -12,7 +12,7 @@ import { useContext } from "react"
 // Site metadata
 
 const Metadata = ({ page }) => {
-    const title = `EcoSwap${page ? ` - ${page}` : ""}`
+    const title = `DOX${page ? ` - ${page}` : ""}`
     return (
         <Head>
             <meta charSet="UTF-8"></meta>
@@ -20,10 +20,10 @@ const Metadata = ({ page }) => {
             <meta name="description" content="A privacy-centered DEX aggregator, bringing you a fast, lightweight swap experience with the best rates on Ethereum, Polygon, Fantom, Avalanche, and BNB Chain"></meta>
             <meta property="og:title" content={title}></meta>
             <meta property="og:type" content="website"></meta>
-            <meta property="og:image" content="/ecoswap.png"></meta>
+            <meta property="og:image" content="/dox.png"></meta>
             <meta property="og:description" content="A privacy-centered DEX aggregator, bringing you a fast, lightweight swap experience with the best rates on Ethereum, Polygon, Fantom, Avalanche, and BNB Chain"></meta>
             <title>{title}</title>
-            <link rel="icon" href="/ecoswap-square.png"></link>
+            <link rel="icon" href="/dox.png"></link>
         </Head>
     )
 }
@@ -54,13 +54,14 @@ const App = ({ Component, pageProps }) => {
             </WindowSizeContextProvider>
             <style jsx global>{`
                 :root {
-                    --background: ${theme === "light" ? "#FFFFFF" : "#16191E"};
+                    --background: ${theme === "light" ? "linear-gradient(180deg, rgba(199, 211, 228, 0) 0%, #c7d3e4 50.65%, rgba(199, 211, 228, 0) 100%)" : "linear-gradient(90deg, #06070A 0%, #131823 100%)"};
                     --input-background: ${theme === "light" ? "#F8FBFF" : "#191B1F"};
                     /* base accent #48BF53 */
-                    --light-dark: ${theme === "light" ? "#C8EBCB" : "#6DCC75"};
-                    --light: ${theme === "light" ? "#ECF8ED" : "#B6E5BA"};
+                    --light-dark: ${theme === "light" ? "#d3e4fc" : "#4b66f9"};
+                    --bobol: ${theme === "light" ? "#FFFFFF" : "#131823"};
+                    --light: ${theme === "light" ? "#d3e4fc" : "#c2d8f8"};
                     --base-black: #16191E;
-                    --black: ${theme === "light" ? "#16191E" : "#E6E9EE"};
+                    --black: ${theme === "light" ? "#222222" : "#E6E9EE"};
                     --dark-gray: ${theme === "light" ? "#56595E" : "#C6C9CE"};
                     --gray: ${theme === "light" ? "#96999E" : "#A6A9AE"};
                     --light-gray: ${theme === "light" ? "#C6C9CE" : "#76797E"};
@@ -74,7 +75,7 @@ const App = ({ Component, pageProps }) => {
                 }
 
                 body {
-                    background-color: var(--background);
+                    background: var(--background);
                     margin: 0;
                 }
 

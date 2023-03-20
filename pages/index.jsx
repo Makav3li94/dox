@@ -36,7 +36,7 @@ const Swap = () => {
                         <div className="divider"></div>
                     </>
                 )}
-                <div className="disclaimer">Trading is risky! EcoSwap is not responsible for any trading losses or financial losses while using the app. DYOR before buying any token or making any trade to avoid getting rekt. EcoSwap is beta software and may contain bugs. Bug reports in the EcoSwap Discord server are appreciated!</div>
+                <div className="disclaimer">Trading is risky! DOX is not responsible for any trading losses or financial losses while using the app. DYOR before buying any token or making any trade to avoid getting rekt. EcoSwap is beta software and may contain bugs. Bug reports in the EcoSwap Discord server are appreciated!</div>
             </div>
             <style jsx>{`
                 .content {
@@ -46,7 +46,10 @@ const Swap = () => {
                     flex-direction: column;
                     justify-content: center;
                     align-items: flex-start;
-                    padding-bottom: 20px;
+                    padding: 20px;
+                    background-color: var(--bobol);
+                    box-shadow: #ECF0F9;
+                    border-radius: 24px;
                 }
 
                 .top {

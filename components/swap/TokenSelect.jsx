@@ -2,23 +2,23 @@
 
 import ERC20ABI from "../../abis/ERC20.json"
 import ThemeContext from "../../state/ThemeContext.js"
-import EthereumContext, { web3, BN } from "../../state/EthereumContext.js"
-import { parse, format } from "../../helpers/number.js"
-import { useState, useEffect, useContext } from "react"
+import EthereumContext, {web3, BN} from "../../state/EthereumContext.js"
+import {parse, format} from "../../helpers/number.js"
+import {useState, useEffect, useContext} from "react"
 
 // Token selection component
 
-const TokenSelect = ({ label, type }) => {
+const TokenSelect = ({label, type}) => {
     // Token selection menu data
 
-    const { theme } = useContext(ThemeContext)
-    const { chain, account } = useContext(EthereumContext)
+    const {theme} = useContext(ThemeContext)
+    const {chain, account} = useContext(EthereumContext)
     const activeToken = chain.swap[type === "input" ? "tokenIn" : "tokenOut"]
     const setActiveToken = chain.swap[type === "input" ? "setTokenIn" : "setTokenOut"]
     const oppositeToken = chain.swap[type === "input" ? "tokenOut" : "tokenIn"]
     const setOppositeToken = chain.swap[type === "input" ? "setTokenOut" : "setTokenIn"]
-    const [ menuActive, setMenuActive ] = useState(false)
-    const [ tokenList, setTokenList ] = useState(chain.tokens)
+    const [menuActive, setMenuActive] = useState(false)
+    const [tokenList, setTokenList] = useState(chain.tokens)
 
     // Update token search with query
 
@@ -28,9 +28,9 @@ const TokenSelect = ({ label, type }) => {
         const query = event.target.value.toLowerCase()
         if (!query) return setTokenList(chain.tokens.filter(token => oppositeToken ? token.address !== oppositeToken.address : true))
         const tokens = chain.tokens.filter(token => (oppositeToken ? token.address !== oppositeToken.address : true) &&
-                                                    (token.name.toLowerCase().includes(query) ||
-                                                    token.symbol.toLowerCase().includes(query) ||
-                                                    token.address.toLowerCase() === query))
+            (token.name.toLowerCase().includes(query) ||
+                token.symbol.toLowerCase().includes(query) ||
+                token.address.toLowerCase() === query))
 
         tokens.sort((a, b) => {
             // Sort tokens by address
@@ -74,7 +74,7 @@ const TokenSelect = ({ label, type }) => {
         const Token = new chain.web3.eth.Contract(ERC20ABI, address)
         let name, symbol, decimals, balance
         try {
-            [ name, symbol, decimals, balance ] = await Promise.all([
+            [name, symbol, decimals, balance] = await Promise.all([
                 Token.methods.name().call()
                     .catch(async () => {
                         return web3.utils.toAscii(await chain.web3.eth.call({
@@ -213,6 +213,7 @@ const TokenSelect = ({ label, type }) => {
     return (
         <>
             <button className="select" onClick={() => setMenuActive(true)}>
+                {activeToken ? <img className="s_icon" src={`${activeToken.logoURI}`}></img> : ''}
                 {activeToken ? activeToken.symbol.length > 9 ? `${activeToken.symbol.slice(0, 8)}...` : activeToken.symbol : "Choose"}
                 <img className="arrow" src="/icons/arrow-down.svg"></img>
             </button>
@@ -230,7 +231,8 @@ const TokenSelect = ({ label, type }) => {
                     </div>
                     <div className="tokens">
                         {tokenList.map(token => (
-                            <button className="token" key={`${chain.id}-${type}-${token.address}`} onClick={event => switchToken(event, token)}>
+                            <button className="token" key={`${chain.id}-${type}-${token.address}`}
+                                    onClick={event => switchToken(event, token)}>
                                 <img className="icon" src={`${token.logoURI}`} onError={defaultImage}></img>
                                 <div className="info">
                                     <div className="name">{token.name} - {token.symbol}</div>
@@ -239,7 +241,8 @@ const TokenSelect = ({ label, type }) => {
                                             {chain.tokenBalances[token.address] ? format(parse(chain.tokenBalances[token.address], token.decimals)) : "0"}
                                         </div>
                                         {token.external ? token.added ? (
-                                            <div className="token-control" onClick={() => removeToken(token)}>- Remove</div>
+                                            <div className="token-control" onClick={() => removeToken(token)}>-
+                                                Remove</div>
                                         ) : (
                                             <div className="token-control" onClick={() => addToken(token)}>+ Add</div>
                                         ) : <></>}
@@ -249,7 +252,7 @@ const TokenSelect = ({ label, type }) => {
                         ))}
                     </div>
                 </div>
-             ) : <></>}
+            ) : <></>}
             <style jsx>{`
                 .select {
                     display: flex;
@@ -276,7 +279,7 @@ const TokenSelect = ({ label, type }) => {
                     width: calc(100% - 32px);
                     height: calc(100% - 64px);
                     z-index: 1;
-                    background-color: var(--background);
+                    background-color: var(--bobol);
                 }
 
                 .header {
@@ -354,6 +357,13 @@ const TokenSelect = ({ label, type }) => {
                     border: 1px solid var(--light-dark);
                 }
 
+               .s_icon {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    object-fit: contain;
+                    position: absolute;
+                    right: 120px;
+                }
                 .icon {
                     width: 2.5rem;
                     height: 2.5rem;
